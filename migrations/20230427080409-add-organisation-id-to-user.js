@@ -17,8 +17,10 @@ module.exports = {
       type: 'foreign key',
       references: {
          table: "Organizations",
-         field: "id"
-      }
+         field: "id",
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     })
   },
 

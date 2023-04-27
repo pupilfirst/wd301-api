@@ -18,7 +18,9 @@ module.exports = {
       references: {
          table: "Tasks",
          field: "id"
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     })
   },
 

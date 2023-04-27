@@ -19,4 +19,11 @@ router.post('/', async function(req, res, next) {
   res.json(newTask);
 });
 
+router.delete('/:taskID', async function(req, res, next) {
+  const newTask = await Task.deleteTask({
+    taskID: parseInt(req.params.taskID),
+    projectID: parseInt(req.params.projectID)
+  })
+  res.json(newTask);
+});
 module.exports = router;
