@@ -1,9 +1,29 @@
 var express = require('express');
+const { Comment } = require("../../../../../models");
 var router = express.Router({mergeParams: true});
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Comment root page' });
+router.get('/', async function(req, res, next) {
+  
+  const taskID = parseInt(req.params.taskID);
+  const comments = await Comment.getAll(taskID);
+  return res.json(comments);
+});
+
+router.post('/', async function(req, res, next) {
+  const organizationID = parseInt(req.params.organizationID);
+  const projectID = parseInt(req.params.projectID);
+  const taskID = parseInt(req.params.taskID);
+  const description = req.body.comment;
+  const owner = req.user;
+  const newComment = await Comment.add({
+    organizationID,
+    projectID,
+    taskID,
+    description,
+    owner,
+  });
+  return res.json(newComment);
 });
 
 module.exports = router;

@@ -5,6 +5,6 @@ var router = express.Router({mergeParams: true});
 
 /* GET home page. */
 router.use("/", tasksRouter);
-router.use("/:task_id/comments", commentsRouter);
+router.use("/:taskID/comments", commentsRouter);
 
 module.exports = router;
