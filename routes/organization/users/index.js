@@ -19,6 +19,7 @@ router.post("/signup", async function (req, res, next) {
       name: req.body.name,
       email: req.body.email,
       password: hashedPwd,
+      organization_id: parseInt(req.params.organizationID)
     });
     req.login(user, { session: false }, (err) => {
       if (err) {

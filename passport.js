@@ -40,7 +40,7 @@ passport.use(
     },
     function (jwtPayload, cb) {
       //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-      return User.findOneById(jwtPayload.id)
+      return User.findByPk(jwtPayload.id)
         .then((user) => {
           return cb(null, user);
         })
