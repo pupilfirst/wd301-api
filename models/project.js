@@ -18,8 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static getAll() {
-      return this.findAll();
+    static getAll(organizationID) {
+      return this.findAll({
+        where: {
+          organization_id: organizationID,
+        },
+      });
     }
     static show(projectID) {
       return this.findByPk(projectID);
@@ -27,6 +31,17 @@ module.exports = (sequelize, DataTypes) => {
 
     static addProject({ name, organizationID }) {
       return this.create({ name, organization_id: organizationID });
+    }
+
+    static changeName(projectID, name) {
+      return this.update(
+        { name },
+        {
+          where: {
+            id: projectID,
+          },
+        }
+      );
     }
   }
   Project.init(
