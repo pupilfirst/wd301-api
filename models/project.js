@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
+    static getAll() {
+      return this.findAll();
+    }
     static show(projectID) {
       return this.findByPk(projectID);
     }

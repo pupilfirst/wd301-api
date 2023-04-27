@@ -2,9 +2,10 @@ var express = require("express");
 const { Project } = require("../../../models");
 var router = express.Router({ mergeParams: true });
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.json(req.params.organizationID)
+
+router.get("/", async function (req, res, next) {
+  const projects = await Project.getAll();
+  res.json(projects)
 });
 
 router.post("/", async function (req, res, next) {
@@ -15,8 +16,8 @@ router.post("/", async function (req, res, next) {
   return res.json(project);
 });
 
-router.get("/:project_id", async function (req, res, next) {
-  const project = await Project.show(req.params.project_id);
+router.get("/:projectID", async function (req, res, next) {
+  const project = await Project.show(req.params.projectID);
   console.log(project);
   return res.json(project);
 });

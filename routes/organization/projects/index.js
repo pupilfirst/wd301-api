@@ -4,5 +4,5 @@ const tasksRouter = require("./tasks");
 var router = express.Router({ mergeParams: true });
 
 router.use("/", projectRouter);
-router.use("/:project_id/tasks", tasksRouter);
+router.use("/:projectID/tasks", tasksRouter);
 module.exports = router;

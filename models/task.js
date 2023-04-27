@@ -21,6 +21,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "task_id",
       })
     }
+
+    static getAll() {
+      return this.findAll();
+    }
+    static show(taskID) {
+      return this.findByPk(taskID);
+    }
+
+    static addTask({ title, description, state, projectID, organizationID }) {
+      return this.create({ title, description, state, project_id: projectID, organization_id: organizationID });
+    }
   }
   Task.init({
     title: DataTypes.STRING,
