@@ -1,5 +1,6 @@
 var express = require('express');
 const { Organization } = require("../../models");
+const passport = require("passport");
 var router = express.Router({mergeParams: true});
 const projectsRouter = require("./projects")
 const usersRouter = require("./users")
@@ -26,7 +27,7 @@ router.delete('/:organizationID', async function(req, res, next) {
   return res.json(org);
 });
 
-router.use("/:organizationID/projects", projectsRouter);
+router.use("/:organizationID/projects", passport.authenticate('jwt', {session: false}), projectsRouter);
 router.use("/:organizationID/users", usersRouter);
 
 
