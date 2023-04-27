@@ -15,7 +15,7 @@ router.post('/', async function(req, res, next) {
   const projectID = parseInt(req.params.projectID);
   const taskID = parseInt(req.params.taskID);
   const description = req.body.description;
-  const owner = req.user;
+  const owner = req.user.id;
   const newComment = await Comment.add({
     organizationID,
     projectID,
