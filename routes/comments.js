@@ -26,4 +26,16 @@ router.post('/', async function(req, res, next) {
   return res.json(newComment);
 });
 
+router.patch("/:commentID", async function (req, res, next) {
+  const { description} = req.body;
+  const comment = await Comment.show(parseInt(req.params.commentID));
+  
+  if (description) {
+    comment.description = description;
+  }
+  
+  await comment.save();
+  return res.json(comment);
+});
+
 module.exports = router;
