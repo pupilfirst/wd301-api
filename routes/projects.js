@@ -23,7 +23,8 @@ router.get("/:projectID", async function (req, res, next) {
 });
 
 router.patch("/:projectID", async function (req, res, next) {
-  const project = await Project.changeName(parseInt(req.params.projectID), req.body.name);
+  await Project.changeName(parseInt(req.params.projectID), req.body.name);
+  const project = await Project.show(req.params.projectID);
   console.log(project);
   return res.json(project);
 });
