@@ -36,8 +36,27 @@ router.post("/", async function (req, res, next) {
 
 
 
-router.get("/:userID", function (req, res, next) {
-  res.render("index", { title: "user detail page" });
+router.get("/:userID", async function (req, res, next) {
+  const userDetails = await User.details(parseInt(req.params.userID))
+  return res.json(userDetails);
+});
+
+router.patch("/:userID", async function (req, res, next) {
+  const {email, password, name} = req.body;
+  const userDetails = await User.details(parseInt(req.params.userID))
+  if(email) {
+    userDetails.email = email;
+  }
+  if(password) {
+    const hashedPwd = await bcrypt.hash(password, saltRounds);
+    userDetails.password = hashedPwd;
+  }
+
+  if(name) {
+    userDetails.name = name;
+  }
+  await userDetails.save();
+  return res.json(userDetails);
 });
 
 module.exports = router;

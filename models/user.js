@@ -29,6 +29,13 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
     }
+    static details(userID) {
+      return this.findByPk(userID, {
+        attributes: {
+          exclude: ['password']
+        }
+      })
+    }
   }
 
   User.init(
