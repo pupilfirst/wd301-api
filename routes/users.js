@@ -34,8 +34,6 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-
-
 router.get("/:userID", async function (req, res, next) {
   const userDetails = await User.details(parseInt(req.params.userID))
   return res.json(userDetails);
@@ -56,7 +54,9 @@ router.patch("/:userID", async function (req, res, next) {
     userDetails.name = name;
   }
   await userDetails.save();
-  return res.json(userDetails);
+  const sanatisedUser = userDetails.toJSON();
+  delete sanatisedUser['password'];
+  return res.json(sanatisedUser);
 });
 
 module.exports = router;
