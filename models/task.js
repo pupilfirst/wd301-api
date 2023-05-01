@@ -56,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       description: DataTypes.STRING,
+      dueDate: DataTypes.DATE,
       state: DataTypes.ENUM("new", "in_progress", "done"),
     },
     {

@@ -13,7 +13,7 @@ router.post('/', async function(req, res, next) {
   const newTask = await Task.addTask({
     title: req.body.title,
     description: req.body.description,
-    dueDate: req.body.dueDate,
+    dueDate: new Date(req.body.dueDate),
     state: "new",
     projectID: parseInt(req.params.projectID),
     organizationID: req.user.organization_id
