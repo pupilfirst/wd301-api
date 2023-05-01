@@ -12,7 +12,7 @@ var router = express.Router({ mergeParams: true });
 router.get("/", function (req, res, next) {
   res.render("index", { title: "root page" });
 });
-router.use("/organisations", organizationRouter);
+router.use("/organizations", organizationRouter);
 router.post("/users/sign_in", function (req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
