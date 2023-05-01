@@ -20,18 +20,24 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static getAll() {
-      return this.findAll();
+    static getAll(projectID) {
+      return this.findAll({
+        where: {
+          project_id: projectID
+        }
+      });
     }
     static show(taskID) {
       return this.findByPk(taskID);
     }
 
-    static addTask({ title, description, state, projectID, organizationID }) {
+    static addTask({ title, description, state, dueDate, projectID, organizationID }) {
+      // TODO: verify project and task is under the authenticaated org?
       return this.create({
         title,
         description,
         state,
+        dueDate,
         project_id: projectID,
         organization_id: organizationID,
       });

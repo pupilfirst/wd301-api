@@ -1,17 +1,17 @@
 var express = require("express");
-const { Project } = require("../../../models");
+const { Project } = require("../models");
 var router = express.Router({ mergeParams: true });
 
 
 router.get("/", async function (req, res, next) {
-  const projects = await Project.getAll(parseInt(req.params.organizationID));
+  const projects = await Project.getAll(req.user.organization_id);
   res.json(projects)
 });
 
 router.post("/", async function (req, res, next) {
   const project = await Project.addProject({
     name: req.body.name,
-    organizationID: parseInt(req.params.organizationID),
+    organizationID: req.user.organization_id,
   });
   return res.json(project);
 });

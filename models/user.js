@@ -19,7 +19,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "owner",
       });
     }
+    static list(organizationID) {
+      return this.findAll({
+        where: {
+          organization_id: organizationID,
+        },
+        attributes: {
+          exclude: ["password"],
+        },
+      });
+    }
   }
+
   User.init(
     {
       name: DataTypes.STRING,
