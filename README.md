@@ -38,6 +38,12 @@ cd wd301-api
 NODE_ENV=production pm2 start "npx sequelize-cli db:migrate && npm start" --name wd301-api
 ```
 
+- Stopping the application
+
+```sh
+pm2 stop wd301-api
+```
+
 - You can get the logs for the application by running
 
 ```sh
