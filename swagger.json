@@ -1,0 +1,1033 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Smarter Tasks API (PMS)",
+    "description": "**Smarter Task** brings all your tasks, team members together. It's a productivity powerhouse.  All it takes are projects, lists, and tasks to get a clear view of who is doing what in your organization and what needs to get done. ",
+    "license": {
+      "name": "Pupilfirst",
+      "url": "https://www.pupilfirst.org/"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://wd301-api.pupilfirst.school/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Organization",
+      "description": "In Smarter Tasks, everything starts with an organization. So, to build a client application based on the following API endpioints, you have to register as an organization. As all other resources like users, projects, tasks comes under an organization.\n"
+    },
+    {
+      "name": "Users",
+      "description": "An organization can have multiuple users. The users endpoints can be used to, I) login to the application, II) get the list of all other users, III) add or edit a user.\n"
+    },
+    {
+      "name": "Projects",
+      "description": "In Smarter Tasks, an organization can have multiuple projects. Projects endpoints can be used to, create a new project, get list of all projects, update a project.\n"
+    },
+    {
+      "name": "Tasks",
+      "description": "A project can have multiuple tasks. Here tasks are nothing but an advance version of Todos (that you've created before). A tasks are grouped under a project, can have a different assignee and have multiple states like: \"new\", \"in_progress\", \"done\". The tasks endpoints can be used to, create a new task, get list of all tasks in a project, update a task or to delete a task.  \n"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "host": "https://smartertasks-api.pupilfirst.org",
+  "paths": {
+    "/organizations": {
+      "post": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Create a new organization",
+        "security": [],
+        "requestBody": {
+          "description": "New organization request body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewOrgRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Organization created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/NewOrganizationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get list of all users for an organization",
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/UserResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Add a new user in your organization",
+        "requestBody": {
+          "description": "New user request body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewUserRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user details by his/her ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/UserResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user found with the given ID"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Sample request body to update user details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewUserRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/UserResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "422": {
+            "description": "Unprocessable entity"
+          }
+        }
+      }
+    },
+    "/users/sign_in": {
+      "post": {
+        "summary": "User signin",
+        "security": [],
+        "description": "The Signin endpoint allows you to login to the application and get an access_token using the email and password.\n",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "description": "Sample payload for user signin",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/SigninRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/UserSigninResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status-Code: 401 unauthorized",
+            "schema": {
+              "type": "string",
+              "example": "Invalid email or password"
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get list of all projects for an organization",
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Project"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create a new project",
+        "requestBody": {
+          "description": "New project request body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewProjectRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Project created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Project"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/projects/{id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get project details by ID",
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/definitions/Project"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No project found with the given ID"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Update project",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Sample request body to update a project",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewProjectRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/definitions/Project"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "422": {
+            "description": "Unprocessable entity"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/projects/{projectId}/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get all tasks of a project",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Task"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid project ID supplied"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Add a new task in a project",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Sample request body to create a new task",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewTaskRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Task created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/projects/{projectId}/tasks/{id}": {
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "ID of the task which you want to update"
+          }
+        ],
+        "requestBody": {
+          "description": "Sample request body to update a task",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewTaskRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "422": {
+            "description": "Unprocessable entity"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Delete a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "ID of the task which you want to delete"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Request processed successfully",
+            "content": {}
+          },
+          "404": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          },
+          "422": {
+            "description": "Unprocessable entity"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/tasks/{task_id}/comments": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get all comments for a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "project_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          },
+          {
+            "in": "path",
+            "name": "task_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Task ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CommentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid project ID supplied"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Add a new comment for a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "project_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Project ID"
+          },
+          {
+            "in": "path",
+            "name": "task_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Task ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Sample request body to create a new comment againsta task",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewCommentRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Task created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/CommentResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    }
+  },
+  "definitions": {
+    "Organization": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Pupilfirst"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "email",
+        "password",
+        "organsation_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Arun S"
+        },
+        "email": {
+          "type": "string",
+          "example": "arun.s@yopmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "87654321"
+        },
+        "organsation_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Project": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "organsation_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "College Website v2.0"
+        },
+        "organsation_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "Task": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "state",
+        "project_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "title": {
+          "type": "string",
+          "example": "Design the wireframe"
+        },
+        "description": {
+          "type": "string",
+          "example": "Build the complete wireframe using balsamiq"
+        },
+        "project_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "new",
+            "in_progress",
+            "done"
+          ],
+          "example": "done"
+        },
+        "assignee": {
+          "type": "integer",
+          "example": 1
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "10/04/2023"
+        }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "required": [
+        "id",
+        "description",
+        "task_id",
+        "owner"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "description": {
+          "type": "string",
+          "example": "I've completed the design task. The development team can start working on it."
+        },
+        "task_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "owner": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "UserResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Arun S"
+        },
+        "email": {
+          "type": "string",
+          "example": "arun.s@yopmail.com"
+        },
+        "organsation_id": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "UserSigninResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "example": "Arun S"
+            },
+            "email": {
+              "type": "string",
+              "example": "arun.s@yopmail.com"
+            },
+            "organization_id": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        },
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        }
+      }
+    },
+    "NewUserRequestBody": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Arun S"
+            },
+            "email": {
+              "type": "string",
+              "example": "arun.s@yopmail.com"
+            },
+            "password": {
+              "type": "string",
+              "example": "2345678"
+            }
+          }
+        }
+      }
+    },
+    "SigninRequestBody": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "example": "test@geogo.in"
+            },
+            "password": {
+              "type": "string",
+              "example": "12345678"
+            }
+          }
+        }
+      }
+    },
+    "NewOrgRequestBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Pupilfirst Org."
+        },
+        "user_name": {
+          "type": "string",
+          "example": "Arun S"
+        },
+        "email": {
+          "type": "string",
+          "example": "arun.s@yopmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "2345678"
+        }
+      }
+    },
+    "NewOrganizationResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "example": "Arun S"
+            },
+            "email": {
+              "type": "string",
+              "example": "arun.s@yopmail.com"
+            },
+            "organization_id": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        },
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        }
+      }
+    },
+    "NewProjectRequestBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Create Alumni website"
+        }
+      }
+    },
+    "NewTaskRequestBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Design the data model"
+        },
+        "description": {
+          "type": "string",
+          "example": "Update the Data Model as per last decided meeting"
+        },
+        "state": {
+          "type": "string",
+          "example": "new"
+        },
+        "assignee": {
+          "type": "string",
+          "required": false,
+          "example": 1
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "10/04/2023"
+        }
+      }
+    },
+    "NewCommentRequestBody": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "Design the data model"
+        },
+        "owner": {
+          "type": "string",
+          "required": false,
+          "example": 1
+        }
+      }
+    },
+    "CommentResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "description": {
+          "type": "string",
+          "example": "I've completed the design task. The development team can start working on it."
+        },
+        "task_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "owner": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  }
+}

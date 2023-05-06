@@ -1,17 +1,19 @@
 var express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const swaggerUi = require('swagger-ui-express');
 const organizationRouter = require("./organizations");
 const projectsRouter = require("./projects");
 const tasksRouter = require("./tasks");
 const commentsRouter = require("./comments");
 const usersRouter = require("./users");
 var router = express.Router({ mergeParams: true });
+const swaggerDocument = require('../swagger.json');
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "root page" });
-});
+
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(swaggerDocument));
 router.use("/organizations", organizationRouter);
 router.post("/users/sign_in", function (req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
