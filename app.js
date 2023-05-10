@@ -9,8 +9,11 @@ const passport = require("passport");
 
 var indexRouter = require('./routes/index');
 
-
 var app = express();
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
