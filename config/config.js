@@ -8,11 +8,11 @@ module.exports = {
     dialect: "postgres",
   },
   test: {
-    username: "root",
-    password: null,
-    database: "database_test",
+    username: "postgres",
+    password: "postgres",
+    database: "wd301_api_test",
     host: "127.0.0.1",
-    dialect: "mysql",
+    dialect: "postgres",
   },
   production: {
     use_env_variable: "DATABASE_URL",
