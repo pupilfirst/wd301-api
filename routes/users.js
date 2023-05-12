@@ -2,8 +2,6 @@ var express = require("express");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
-
 var router = express.Router({ mergeParams: true });
 
 router.get("/", async function (req, res, next) {
@@ -12,7 +10,7 @@ router.get("/", async function (req, res, next) {
 });
 
 router.post("/", async function (req, res, next) {
-  const hashedPwd = await bcrypt.hash(req.body.password, saltRounds);
+  const hashedPwd = await bcrypt.hash(req.body.password, process.env.SALT_ROUNDS);
   try {
     const user = await User.create({
       name: req.body.name,
@@ -26,7 +24,7 @@ router.post("/", async function (req, res, next) {
       }
       let sanatisedUser = user.toJSON();
       delete sanatisedUser["password"];
-      const token = jwt.sign(sanatisedUser, "your_jwt_secret");
+      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET);
       return res.json({ user: sanatisedUser, token });
     });
   } catch (error) {
@@ -47,7 +45,7 @@ router.patch("/:userID", async function (req, res, next) {
     userDetails.email = email;
   }
   if(password) {
-    const hashedPwd = await bcrypt.hash(password, saltRounds);
+    const hashedPwd = await bcrypt.hash(password, process.env.SALT_ROUNDS);
     userDetails.password = hashedPwd;
   }
 

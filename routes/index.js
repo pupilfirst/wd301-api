@@ -30,7 +30,7 @@ router.post("/users/sign_in", function (req, res, next) {
       } // generate a signed json web token with the contents of user object and return it in the response
       let sanatisedUser = user.toJSON();
       delete sanatisedUser["password"];
-      const token = jwt.sign(sanatisedUser, "your_jwt_secret");
+      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET);
       return res.json({ user: sanatisedUser, token });
     });
   })(req, res);
