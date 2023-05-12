@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Smarter Tasks API (PMS)",
-    "description": "**Smarter Task** brings all your tasks, team members together. It''s a productivity powerhouse.  All it takes are projects, lists, and tasks to get a clear view of who is doing what in your organization and what needs to get done.\n## How to use the APIs\nIn Smarter Tasks, everything starts with an organization. So, to build a client application based on the following API endpioints, you have to register as an organization, as all other resources like users, projects, tasks comes under an organization. \n\nSo,\n1. First, you have to start with the `POST /organisations` endpoint to\ncreate an organization. In successful response **you will get a token**, which you have to use, to make API calls to the protected endpoints.\n2. Similarly on `POST /users/sign_in` endpoint, after successful signin, you will get the token.\n3. The above two are the only public endpoints, as rest of the endpoints would require you to send the token as a Bearer token in the `Authorization` header. Like this: `Bearer eyJhbGciVCJ9.eyJpZCI6NE2OxNzJ9.AFgkK9rzKHbAs`.\n4. So once you complete successful signup or signin, you can create a project using  `POST /projects` endpoint.\n5. Then you can get the list of all projects using the `GET /projects` endpoint and check details of a project using the `GET /projects/{id}` API. This is also a protected endpoint, means you have to pass the `Authorization` header.\n6. To add tasks against a project, you can use the `POST /projects/{projectId}/tasks` endpoint.\n7. To get the list of all tasks against a project, you've to use this endpoint: `GET /projects/{projectId}/tasks`. You can check the other **Tasks** endpoints to perform edit, delete operations on a task.\n8. To add a comment on a task, use this endpoint `POST /projects/{projectId}/tasks/comments`.\n9. To list down all users of the organisation that you've created, use this endpoint `GET /users`. And to create a new user, use the `POST /users` endpoint.\n",
+    "description": "**Smarter Task** brings all your tasks, team members together. It''s a productivity powerhouse.  All it takes are projects, lists, and tasks to get a clear view of who is doing what in your Organisation and what needs to get done.\n## How to use the APIs\nIn Smarter Tasks, everything starts with an Organisation. So, to build a client application based on the following API endpioints, you have to register as an Organisation, as all other resources like users, projects, tasks comes under an Organisation. \n\nSo,\n1. First, you have to start with the `POST /organisations` endpoint to\ncreate an Organisation. In successful response **you will get a token**, which you have to use, to make API calls to the protected endpoints.\n2. Similarly on `POST /users/sign_in` endpoint, after successful signin, you will get the token.\n3. The above two are the only public endpoints, as rest of the endpoints would require you to send the token as a Bearer token in the `Authorization` header. Like this: `Bearer eyJhbGciVCJ9.eyJpZCI6NE2OxNzJ9.AFgkK9rzKHbAs`.\n4. So once you complete successful signup or signin, you can create a project using  `POST /projects` endpoint.\n5. Then you can get the list of all projects using the `GET /projects` endpoint and check details of a project using the `GET /projects/{id}` API. This is also a protected endpoint, means you have to pass the `Authorization` header.\n6. To add tasks against a project, you can use the `POST /projects/{projectId}/tasks` endpoint.\n7. To get the list of all tasks against a project, you've to use this endpoint: `GET /projects/{projectId}/tasks`. You can check the other **Tasks** endpoints to perform edit, delete operations on a task.\n8. To add a comment on a task, use this endpoint `POST /projects/{projectId}/tasks/comments`.\n9. To list down all users of the organisation that you've created, use this endpoint `GET /users`. And to create a new user, use the `POST /users` endpoint.\n",
     "license": {
       "name": "Pupilfirst",
       "url": "https://www.pupilfirst.org/"
@@ -16,16 +16,16 @@
   ],
   "tags": [
     {
-      "name": "Organization",
-      "description": "In Smarter Tasks, everything starts with an organization. So, to build a client application based on the following API endpioints, you have to register as an organization. As all other resources like users, projects, tasks comes under an organization.\n"
+      "name": "Organisation",
+      "description": "In Smarter Tasks, everything starts with an Organisation. So, to build a client application based on the following API endpioints, you have to register as an Organisation. As all other resources like users, projects, tasks comes under an Organisation.\n"
     },
     {
       "name": "Users",
-      "description": "An organization can have multiuple users. The users endpoints can be used to, I) login to the application, II) get the list of all other users, III) add or edit a user.\n"
+      "description": "An Organisation can have multiuple users. The users endpoints can be used to, I) login to the application, II) get the list of all other users, III) add or edit a user.\n"
     },
     {
       "name": "Projects",
-      "description": "In Smarter Tasks, an organization can have multiuple projects. Projects endpoints can be used to, create a new project, get list of all projects, update a project.\n"
+      "description": "In Smarter Tasks, an Organisation can have multiuple projects. Projects endpoints can be used to, create a new project, get list of all projects, update a project.\n"
     },
     {
       "name": "Tasks",
@@ -45,15 +45,15 @@
   ],
   "host": "https://smartertasks-api.pupilfirst.org",
   "paths": {
-    "/organizations": {
+    "/organisations": {
       "post": {
         "tags": [
-          "Organization"
+          "Organisation"
         ],
-        "summary": "Create a new organization",
+        "summary": "Create a new Organisation",
         "security": [],
         "requestBody": {
-          "description": "New organization request body",
+          "description": "New Organisation request body",
           "content": {
             "application/json": {
               "schema": {
@@ -65,7 +65,7 @@
         },
         "responses": {
           "200": {
-            "description": "Organization created successfully",
+            "description": "Organisation created successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -86,7 +86,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "Get list of all users for an organization",
+        "summary": "Get list of all users for an Organisation",
         "responses": {
           "200": {
             "description": "Request processed successfully",
@@ -107,7 +107,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "Add a new user in your organization",
+        "summary": "Add a new user in your Organisation",
         "requestBody": {
           "description": "New user request body",
           "content": {
@@ -261,7 +261,7 @@
         "tags": [
           "Projects"
         ],
-        "summary": "Get list of all projects for an organization",
+        "summary": "Get list of all projects for an Organisation",
         "responses": {
           "200": {
             "description": "Request processed successfully",
@@ -668,7 +668,7 @@
     }
   },
   "definitions": {
-    "Organization": {
+    "Organisation": {
       "type": "object",
       "required": [
         "id",
@@ -849,7 +849,7 @@
               "type": "string",
               "example": "arun.s@yopmail.com"
             },
-            "organization_id": {
+            "organisation_id": {
               "type": "integer",
               "example": 1
             }
@@ -940,7 +940,7 @@
               "type": "string",
               "example": "arun.s@yopmail.com"
             },
-            "organization_id": {
+            "organisation_id": {
               "type": "integer",
               "example": 1
             }

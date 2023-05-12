@@ -27,12 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       return this.findByPk(commentID);
     }
 
-    static add({ organizationID, projectID, taskID, description, owner }) {
+    static add({ organisationID, projectID, taskID, description, owner }) {
       return this.create({
         description,
         owner,
         project_id: projectID,
-        organization_id: organizationID,
+        organisation_id: organisationID,
         task_id: taskID,
       });
     }

@@ -2,7 +2,7 @@ var express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const swaggerUi = require('swagger-ui-express');
-const organizationRouter = require("./organizations");
+const organisationRouter = require("./organisations");
 const projectsRouter = require("./projects");
 const tasksRouter = require("./tasks");
 const commentsRouter = require("./comments");
@@ -14,7 +14,7 @@ const swaggerDocument = require('../swagger.json');
 
 router.use('/', swaggerUi.serve);
 router.get('/', swaggerUi.setup(swaggerDocument));
-router.use("/organizations", organizationRouter);
+router.use("/organisations", organisationRouter);
 router.post("/users/sign_in", function (req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
@@ -30,7 +30,7 @@ router.post("/users/sign_in", function (req, res, next) {
       } // generate a signed json web token with the contents of user object and return it in the response
       let sanatisedUser = user.toJSON();
       delete sanatisedUser["password"];
-      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET);
+      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET || "your_jwt_secret");
       return res.json({ user: sanatisedUser, token });
     });
   })(req, res);

@@ -4,14 +4,14 @@ var router = express.Router({ mergeParams: true });
 
 
 router.get("/", async function (req, res, next) {
-  const projects = await Project.getAll(req.user.organization_id);
+  const projects = await Project.getAll(req.user.organisation_id);
   res.json(projects)
 });
 
 router.post("/", async function (req, res, next) {
   const project = await Project.addProject({
     name: req.body.name,
-    organizationID: req.user.organization_id,
+    organisationID: req.user.organisation_id,
   });
   return res.json(project);
 });

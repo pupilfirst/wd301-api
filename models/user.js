@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Organization, {
-        foreignKey: "organization_id",
+      User.belongsTo(models.Organisation, {
+        foreignKey: "organisation_id",
       });
       User.hasMany(models.Task, {
         foreignKey: "assignee",
@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "owner",
       });
     }
-    static list(organizationID) {
+    static list(organisationID) {
       return this.findAll({
         where: {
-          organization_id: organizationID,
+          organisation_id: organisationID,
         },
         attributes: {
           exclude: ["password"],

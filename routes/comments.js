@@ -11,13 +11,13 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/', async function(req, res, next) {
-  const organizationID = req.user.organization_id;
+  const organisationID = req.user.organisation_id;
   const projectID = parseInt(req.params.projectID);
   const taskID = parseInt(req.params.taskID);
   const description = req.body.description;
   const owner = req.user.id;
   const newComment = await Comment.add({
-    organizationID,
+    organisationID,
     projectID,
     taskID,
     description,

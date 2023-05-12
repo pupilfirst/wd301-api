@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.findByPk(taskID);
     }
 
-    static addTask({ title, description, state, dueDate, projectID, organizationID }) {
+    static addTask({ title, description, state, dueDate, projectID, organisationID }) {
       // TODO: verify project and task is under the authenticaated org?
       return this.create({
         title,
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         state,
         dueDate,
         project_id: projectID,
-        organization_id: organizationID,
+        organisation_id: organisationID,
       });
     }
 

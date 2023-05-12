@@ -4,19 +4,21 @@ const { User } = require("../models");
 const bcrypt = require("bcrypt");
 var router = express.Router({ mergeParams: true });
 
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS || "10");
+
 router.get("/", async function (req, res, next) {
-  const users = await User.list(req.user.organization_id);
+  const users = await User.list(req.user.organisation_id);
   res.json(users);
 });
 
 router.post("/", async function (req, res, next) {
-  const hashedPwd = await bcrypt.hash(req.body.password, process.env.SALT_ROUNDS);
+  const hashedPwd = await bcrypt.hash(req.body.password, SALT_ROUNDS);
   try {
     const user = await User.create({
       name: req.body.name,
       email: req.body.email,
       password: hashedPwd,
-      organization_id: req.user.organization_id
+      organisation_id: req.user.organisation_id,
     });
     req.login(user, { session: false }, (err) => {
       if (err) {
@@ -24,7 +26,7 @@ router.post("/", async function (req, res, next) {
       }
       let sanatisedUser = user.toJSON();
       delete sanatisedUser["password"];
-      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET);
+      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET || "your_jwt_secret");
       return res.json({ user: sanatisedUser, token });
     });
   } catch (error) {
@@ -34,27 +36,27 @@ router.post("/", async function (req, res, next) {
 });
 
 router.get("/:userID", async function (req, res, next) {
-  const userDetails = await User.details(parseInt(req.params.userID))
+  const userDetails = await User.details(parseInt(req.params.userID));
   return res.json(userDetails);
 });
 
 router.patch("/:userID", async function (req, res, next) {
-  const {email, password, name} = req.body;
-  const userDetails = await User.details(parseInt(req.params.userID))
-  if(email) {
+  const { email, password, name } = req.body;
+  const userDetails = await User.details(parseInt(req.params.userID));
+  if (email) {
     userDetails.email = email;
   }
-  if(password) {
-    const hashedPwd = await bcrypt.hash(password, process.env.SALT_ROUNDS);
+  if (password) {
+    const hashedPwd = await bcrypt.hash(password, SALT_ROUNDS);
     userDetails.password = hashedPwd;
   }
 
-  if(name) {
+  if (name) {
     userDetails.name = name;
   }
   await userDetails.save();
   const sanatisedUser = userDetails.toJSON();
-  delete sanatisedUser['password'];
+  delete sanatisedUser["password"];
   return res.json(sanatisedUser);
 });
 

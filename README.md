@@ -22,6 +22,8 @@ npm install pm2 -g
 ```sh
 DATABASE_URL="postgres://postgres:postgres@localhost:5432/wd301_db"
 PORT=8081
+JWT_SECRET="your_jwt_secret"
+SALT_ROUNDS=10
 ```
 
 - Make sure the database exists

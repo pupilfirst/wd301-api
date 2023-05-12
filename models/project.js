@@ -10,18 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Project.belongsTo(models.Organization, {
-        foreignKey: "organization_id",
+      Project.belongsTo(models.Organisation, {
+        foreignKey: "organisation_id",
       });
       Project.hasMany(models.Task, {
         foreignKey: "project_id",
       });
     }
 
-    static getAll(organizationID) {
+    static getAll(organisationID) {
       return this.findAll({
         where: {
-          organization_id: organizationID,
+          organisation_id: organisationID,
         },
       });
     }
@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       return this.findByPk(projectID);
     }
 
-    static addProject({ name, organizationID }) {
-      return this.create({ name, organization_id: organizationID });
+    static addProject({ name, organisationID }) {
+      return this.create({ name, organisation_id: organisationID });
     }
 
     static changeName(projectID, name) {

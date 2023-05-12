@@ -16,7 +16,7 @@ router.post("/", async function (req, res, next) {
     dueDate: new Date(req.body.dueDate),
     state: "new",
     projectID: parseInt(req.params.projectID),
-    organizationID: req.user.organization_id,
+    organisationID: req.user.organisation_id,
   });
   res.json(newTask);
 });
