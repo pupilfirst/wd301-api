@@ -29,7 +29,7 @@
     },
     {
       "name": "Tasks",
-      "description": "A project can have multiuple tasks. Here tasks are nothing but an advance version of Todos (that you've created before). A tasks are grouped under a project, can have a different assignee and have multiple states like: \"new\", \"in_progress\", \"done\". The tasks endpoints can be used to, create a new task, get list of all tasks in a project, update a task or to delete a task.  \n"
+      "description": "A project can have multiuple tasks. Here tasks are nothing but an advance version of Todos (that you've created before). A tasks are grouped under a project, can have a different assignee and have multiple states like: \"pending\", \"in_progress\", \"done\". The tasks endpoints can be used to, create a new task, get list of all tasks in a project, update a task or to delete a task.  \n"
     }
   ],
   "security": [
@@ -694,7 +694,7 @@
         "coloumns": {
           "type": "object",
           "example": {
-            "new": {
+            "pending": {
               "id": "pending",
               "title": "Pending",
               "taskIDs": ["2"]
@@ -754,7 +754,7 @@
         },
         "state": {
           "type": "string",
-          "enum": ["new", "in_progress", "done"],
+          "enum": ["pending", "in_progress", "done"],
           "example": "done"
         },
         "assignee": {
@@ -953,7 +953,7 @@
         },
         "state": {
           "type": "string",
-          "example": "new"
+          "example": "pending"
         },
         "assignee": {
           "type": "string",

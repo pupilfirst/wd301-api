@@ -23,7 +23,7 @@ router.get("/", async function (req, res, next) {
     },
     {
       coloumns: {
-        new: {
+        pending: {
           id: "pending",
           title: "Pending",
           taskIDs: [],
