@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, QueryTypes } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     /**
@@ -21,17 +21,25 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static getAll(projectID) {
-      return this.findAll({
-        where: {
-          project_id: projectID
-        }
-      });
+      return sequelize.query(
+        `SELECT state, jsonb_agg(row_to_json("Task")) AS items FROM "${Task.tableName}" AS "Task" WHERE "Task"."project_id" = '${projectID}' GROUP BY state ORDER BY state
+      `,
+        { type: QueryTypes.SELECT }
+      );
     }
+
     static show(taskID) {
       return this.findByPk(taskID);
     }
 
-    static addTask({ title, description, state, dueDate, projectID, organisationID }) {
+    static addTask({
+      title,
+      description,
+      state,
+      dueDate,
+      projectID,
+      organisationID,
+    }) {
       // TODO: verify project and task is under the authenticaated org?
       return this.create({
         title,
@@ -57,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       description: DataTypes.STRING,
       dueDate: DataTypes.DATE,
-      state: DataTypes.ENUM("new", "in_progress", "done"),
+      state: DataTypes.ENUM("pending", "in_progress", "done"),
     },
     {
       sequelize,

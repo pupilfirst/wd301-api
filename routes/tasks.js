@@ -5,8 +5,44 @@ var router = express.Router({ mergeParams: true });
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   const projectID = req.params.projectID;
-  const tasks = await Task.getAll(projectID);
-  res.json(tasks);
+  const all = await Task.getAll(projectID);
+  const groupedItems = all.reduce(
+    (acc, curr) => {
+      const tasks = curr.items.reduce((acc, innerCurr) => {
+        return { ...acc, [`${innerCurr.id}`]: innerCurr };
+      }, {});
+      const taskIDs = curr.items.map((item) => `${item.id}`);
+      return {
+        ...acc,
+        tasks: { ...acc.tasks, ...tasks },
+        coloumns: {
+          ...acc.coloumns,
+          [curr.state]: { id: curr.state, title: acc.coloumns[curr.state].title, taskIDs: taskIDs },
+        },
+      };
+    },
+    {
+      coloumns: {
+        new: {
+          id: "pending",
+          title: "Pending",
+          taskIDs: [],
+        },
+        in_progress: {
+          id: "in_progress",
+          title: "In progress",
+          taskIDs: [],
+        },
+        done: {
+          id: "done",
+          title: "Done",
+          taskIDs: [],
+        },
+      },
+    }
+  );
+
+  res.json(groupedItems);
 });
 
 router.post("/", async function (req, res, next) {

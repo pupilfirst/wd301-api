@@ -37,19 +37,13 @@
       "ApiKeyAuth": []
     }
   ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "host": "https://smartertasks-api.pupilfirst.org",
   "paths": {
     "/organisations": {
       "post": {
-        "tags": [
-          "Organisation"
-        ],
+        "tags": ["Organisation"],
         "summary": "Create a new Organisation",
         "security": [],
         "requestBody": {
@@ -83,9 +77,7 @@
     },
     "/users": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get list of all users for an Organisation",
         "responses": {
           "200": {
@@ -104,9 +96,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Add a new user in your Organisation",
         "requestBody": {
           "description": "New user request body",
@@ -139,9 +129,7 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get user details by his/her ID",
         "parameters": [
           {
@@ -171,9 +159,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user",
         "parameters": [
           {
@@ -222,9 +208,7 @@
         "summary": "User signin",
         "security": [],
         "description": "The Signin endpoint allows you to login to the application and get an access_token using the email and password.\n",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "requestBody": {
           "description": "Sample payload for user signin",
           "content": {
@@ -258,9 +242,7 @@
     },
     "/projects": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Get list of all projects for an Organisation",
         "responses": {
           "200": {
@@ -279,9 +261,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Create a new project",
         "requestBody": {
           "description": "New project request body",
@@ -315,9 +295,7 @@
     },
     "/projects/{id}": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Get project details by ID",
         "responses": {
           "200": {
@@ -336,9 +314,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Update project",
         "parameters": [
           {
@@ -390,9 +366,7 @@
     },
     "/projects/{projectId}/tasks": {
       "get": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Get all tasks of a project",
         "parameters": [
           {
@@ -411,10 +385,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Task"
-                  }
+                  "$ref": "#/definitions/TaskList"
                 }
               }
             }
@@ -425,9 +396,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Add a new task in a project",
         "parameters": [
           {
@@ -472,9 +441,7 @@
     },
     "/projects/{projectId}/tasks/{id}": {
       "patch": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Update a task",
         "parameters": [
           {
@@ -527,9 +494,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Delete a task",
         "parameters": [
           {
@@ -568,9 +533,7 @@
     },
     "/projects/{project_id}/tasks/{task_id}/comments": {
       "get": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Get all comments for a task",
         "parameters": [
           {
@@ -612,9 +575,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Add a new comment for a task",
         "parameters": [
           {
@@ -670,10 +631,7 @@
   "definitions": {
     "Organisation": {
       "type": "object",
-      "required": [
-        "id",
-        "name"
-      ],
+      "required": ["id", "name"],
       "properties": {
         "id": {
           "type": "integer",
@@ -687,13 +645,7 @@
     },
     "User": {
       "type": "object",
-      "required": [
-        "id",
-        "name",
-        "email",
-        "password",
-        "organsation_id"
-      ],
+      "required": ["id", "name", "email", "password", "organsation_id"],
       "properties": {
         "id": {
           "type": "integer",
@@ -719,11 +671,7 @@
     },
     "Project": {
       "type": "object",
-      "required": [
-        "id",
-        "name",
-        "organsation_id"
-      ],
+      "required": ["id", "name", "organsation_id"],
       "properties": {
         "id": {
           "type": "integer",
@@ -739,14 +687,54 @@
         }
       }
     },
+    "TaskList": {
+      "type": "object",
+      "required": ["coloumns", "tasks"],
+      "properties": {
+        "coloumns": {
+          "type": "object",
+          "example": {
+            "new": {
+              "id": "pending",
+              "title": "Pending",
+              "taskIDs": ["2"]
+            },
+            "in_progress": {
+              "id": "in_progress",
+              "title": "In progress",
+              "taskIDs": ["1"]
+            },
+            "done": {
+              "id": "done",
+              "title": "Done",
+              "taskIDs": []
+            }
+          }
+        },
+        "tasks": {
+          "type": "object",
+          "example": {
+            "1": {
+              "id": "1",
+              "title": "Sample Task",
+              "description": "Sample description about the task which is to be completed",
+              "dueDate": "",
+              "state": "in_progress"
+            },
+            "2": {
+              "id": "2",
+              "title": "Another Sample Task",
+              "description": "Sample description about the task which is to be completed",
+              "dueDate": "",
+              "state": "pending"
+            }
+          }
+        }
+      }
+    },
     "Task": {
       "type": "object",
-      "required": [
-        "id",
-        "title",
-        "state",
-        "project_id"
-      ],
+      "required": ["id", "title", "state", "project_id"],
       "properties": {
         "id": {
           "type": "integer",
@@ -766,11 +754,7 @@
         },
         "state": {
           "type": "string",
-          "enum": [
-            "new",
-            "in_progress",
-            "done"
-          ],
+          "enum": ["new", "in_progress", "done"],
           "example": "done"
         },
         "assignee": {
@@ -785,12 +769,7 @@
     },
     "Comment": {
       "type": "object",
-      "required": [
-        "id",
-        "description",
-        "task_id",
-        "owner"
-      ],
+      "required": ["id", "description", "task_id", "owner"],
       "properties": {
         "id": {
           "type": "integer",
