@@ -843,40 +843,30 @@
     "NewUserRequestBody": {
       "type": "object",
       "properties": {
-        "user": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "example": "Arun S"
-            },
-            "email": {
-              "type": "string",
-              "example": "arun.s@yopmail.com"
-            },
-            "password": {
-              "type": "string",
-              "example": "2345678"
-            }
-          }
+        "name": {
+          "type": "string",
+          "example": "Arun S"
+        },
+        "email": {
+          "type": "string",
+          "example": "arun.s@yopmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "2345678"
         }
       }
     },
     "SigninRequestBody": {
       "type": "object",
       "properties": {
-        "user": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "example": "test@geogo.in"
-            },
-            "password": {
-              "type": "string",
-              "example": "12345678"
-            }
-          }
+        "email": {
+          "type": "string",
+          "example": "test@geogo.in"
+        },
+        "password": {
+          "type": "string",
+          "example": "12345678"
         }
       }
     },
