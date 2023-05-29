@@ -17,7 +17,11 @@ router.get("/", async function (req, res, next) {
         tasks: { ...acc.tasks, ...tasks },
         coloumns: {
           ...acc.coloumns,
-          [curr.state]: { id: curr.state, title: acc.coloumns[curr.state].title, taskIDs: taskIDs },
+          [curr.state]: {
+            id: curr.state,
+            title: acc.coloumns[curr.state].title,
+            taskIDs: taskIDs,
+          },
         },
       };
     },
@@ -39,6 +43,7 @@ router.get("/", async function (req, res, next) {
           taskIDs: [],
         },
       },
+      coloumnOrder: ["pending", "in_progress", "done"],
     }
   );
 
