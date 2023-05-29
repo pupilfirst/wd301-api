@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         where: {
           task_id: taskID,
         },
+        order: [["createdAt", "DESC"]]
       });
     }
     static show(commentID) {
