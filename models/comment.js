@@ -1,5 +1,6 @@
 "use strict";
 const { Model, where } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     /**
@@ -17,10 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
     static getAll(taskID) {
+      const { User } = require("../models");
       return this.findAll({
         where: {
           task_id: taskID,
         },
+        include: {model: User, required: true, attributes: ['name', 'email', 'id'] },
         order: [["createdAt", "DESC"]]
       });
     }
