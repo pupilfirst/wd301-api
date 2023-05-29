@@ -55,7 +55,7 @@ router.post("/", async function (req, res, next) {
     title: req.body.title,
     description: req.body.description,
     dueDate: new Date(req.body.dueDate),
-    state: "new",
+    state: "pending",
     projectID: parseInt(req.params.projectID),
     organisationID: req.user.organisation_id,
   });
