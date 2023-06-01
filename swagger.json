@@ -698,7 +698,7 @@
     },
     "TaskList": {
       "type": "object",
-      "required": ["coloumns", "tasks"],
+      "required": ["coloumns", "tasks", "coloumnOrder"],
       "properties": {
         "coloumns": {
           "type": "object",
@@ -738,6 +738,10 @@
               "state": "pending"
             }
           }
+        },
+        "coloumnOrder": {
+          "type": "array",
+          "example": ["pending", "in_progress", "done"]
         }
       }
     },
