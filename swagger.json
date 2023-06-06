@@ -210,6 +210,42 @@
             "description": "Unprocessable entity"
           }
         }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete a user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "description": "Sample request body to delete a user",
+          "content": {
+            "application/json": {
+              
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed successfully",
+            "content": {
+              "application/json": {
+                
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity"
+          }
+        }
       }
     },
     "/users/sign_in": {
