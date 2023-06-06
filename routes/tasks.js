@@ -88,10 +88,10 @@ router.patch("/:taskID", async function (req, res, next) {
   return res.json(task);
 });
 router.delete("/:taskID", async function (req, res, next) {
-  const newTask = await Task.deleteTask({
+  const deletedTask = await Task.deleteTask({
     taskID: parseInt(req.params.taskID),
     projectID: parseInt(req.params.projectID),
   });
-  return res.json(newTask);
+  return res.json(deletedTask);
 });
 module.exports = router;

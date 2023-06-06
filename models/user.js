@@ -32,9 +32,17 @@ module.exports = (sequelize, DataTypes) => {
     static details(userID) {
       return this.findByPk(userID, {
         attributes: {
-          exclude: ['password']
-        }
-      })
+          exclude: ["password"],
+        },
+      });
+    }
+    static deleteUser({ userID, organisationID }) {
+      return this.destroy({
+        where: {
+          id: userID,
+          organisation_id: organisationID,
+        },
+      });
     }
   }
 

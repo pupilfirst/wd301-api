@@ -26,7 +26,10 @@ router.post("/", async function (req, res, next) {
       }
       let sanatisedUser = user.toJSON();
       delete sanatisedUser["password"];
-      const token = jwt.sign(sanatisedUser, process.env.JWT_SECRET || "your_jwt_secret");
+      const token = jwt.sign(
+        sanatisedUser,
+        process.env.JWT_SECRET || "your_jwt_secret"
+      );
       return res.json({ user: sanatisedUser, token });
     });
   } catch (error) {
@@ -58,6 +61,15 @@ router.patch("/:userID", async function (req, res, next) {
   const sanatisedUser = userDetails.toJSON();
   delete sanatisedUser["password"];
   return res.json(sanatisedUser);
+});
+
+router.delete("/:userID", async function (req, res, next) {
+  const userID = parseInt(req.params.userID);
+  if (req.user.id === userID) {
+    return res.status(422).json({ error: "Cannot delete the current user." });
+  }
+  const deletedUser = await User.deleteUser({ userID, organisationID: req.user.organisation_id });
+  return res.json(deletedUser);
 });
 
 module.exports = router;
