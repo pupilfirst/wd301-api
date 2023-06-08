@@ -13,6 +13,11 @@ passport.use(
       //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
       return User.findOne({ where: { email } })
         .then(async (user) => {
+          if (!user) {
+            return done(null, undefined, {
+              message: "No such user",
+            });
+          }
           const result = await bcrypt.compare(password, user.password);
           if (!result) {
             return done(null, false, {
