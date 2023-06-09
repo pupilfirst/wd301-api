@@ -764,14 +764,18 @@
               "title": "Sample Task",
               "description": "Sample description about the task which is to be completed",
               "dueDate": "",
-              "state": "in_progress"
+              "state": "in_progress",
+              "assignedUserName": "John Doe",
+              "assignee": 404
             },
             "2": {
               "id": "2",
               "title": "Another Sample Task",
               "description": "Sample description about the task which is to be completed",
               "dueDate": "",
-              "state": "pending"
+              "state": "pending",
+              "assignedUserName": null,
+              "assignee": null
             }
           }
         },

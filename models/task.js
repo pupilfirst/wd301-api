@@ -22,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static getAll(projectID) {
       return sequelize.query(
-        `SELECT state, jsonb_agg(row_to_json("Task")) AS items FROM "${Task.tableName}" AS "Task" WHERE "Task"."project_id" = '${projectID}' GROUP BY state ORDER BY state
-      `,
+        `SELECT "JR".state, jsonb_agg(row_to_json("JR")) as items FROM (SELECT "Tasks".id, "Tasks".state, "Tasks".description, "Tasks".title, "Tasks"."dueDate", "Users".name as "assignedUserName", "Users".id as "assignee" FROM "Tasks" LEFT JOIN "Users" on "Tasks"."assignee"="Users"."id"  WHERE "Tasks"."project_id" = '${projectID}') "JR" GROUP BY "JR".state ORDER BY "JR".state`,
         { type: QueryTypes.SELECT }
       );
     }
