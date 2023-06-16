@@ -15,18 +15,18 @@ router.get("/", async function (req, res, next) {
       return {
         ...acc,
         tasks: { ...acc.tasks, ...tasks },
-        coloumns: {
-          ...acc.coloumns,
+        columns: {
+          ...acc.columns,
           [curr.state]: {
             id: curr.state,
-            title: acc.coloumns[curr.state].title,
+            title: acc.columns[curr.state].title,
             taskIDs: taskIDs,
           },
         },
       };
     },
     {
-      coloumns: {
+      columns: {
         pending: {
           id: "pending",
           title: "Pending",
@@ -43,7 +43,7 @@ router.get("/", async function (req, res, next) {
           taskIDs: [],
         },
       },
-      coloumnOrder: ["pending", "in_progress", "done"],
+      columnOrder: ["pending", "in_progress", "done"],
     }
   );
 

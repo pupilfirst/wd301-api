@@ -734,9 +734,9 @@
     },
     "TaskList": {
       "type": "object",
-      "required": ["coloumns", "tasks", "coloumnOrder"],
+      "required": ["columns", "tasks", "columnOrder"],
       "properties": {
-        "coloumns": {
+        "columns": {
           "type": "object",
           "example": {
             "pending": {
@@ -779,7 +779,7 @@
             }
           }
         },
-        "coloumnOrder": {
+        "columnOrder": {
           "type": "array",
           "example": ["pending", "in_progress", "done"]
         }
